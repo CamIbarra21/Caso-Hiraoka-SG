@@ -1,4 +1,5 @@
-from app import db  # Importa la instancia de db desde el archivo __init__.py
+from app import db
+from flask_login import UserMixin
 
 # Modelo de Categorías
 class Categoria(db.Model):
@@ -37,7 +38,7 @@ class Producto(db.Model):
     stock_tienda = db.relationship('StockTienda', backref='producto', lazy=True)
 
 # Modelo de Clientes
-class Cliente(db.Model):
+class Cliente(db.Model, UserMixin):
     __tablename__ = 'Clientes'
     ID_Cliente = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Nombre_Cliente = db.Column(db.String(255), nullable=False)
@@ -48,6 +49,9 @@ class Cliente(db.Model):
 
     # Relación con Ventas
     ventas = db.relationship('Venta', backref='cliente', lazy=True)
+
+    def get_id(self):
+        return str(self.ID_Cliente)
 
 # Modelo de Ventas
 class Venta(db.Model):

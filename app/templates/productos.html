@@ -1,0 +1,10 @@
+<h2>Productos</h2>
+<ul>
+    {% for producto in productos %}
+        <li>{{ producto.Nombre }} - {{ producto.Descripcion }}</li>
+    {% else %}
+        <li>No hay productos disponibles.</li>
+    {% endfor %}
+</ul>
+
+<h3>{{ cliente_id }}</h3>
