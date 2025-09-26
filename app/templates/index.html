@@ -7,5 +7,13 @@
 </head>
 <body>
     <h1>Landing page</h1>
+    <h2>Categorías</h2>
+    <ul>
+        {% for categoria in categorias %}
+            <li>{{ categoria.Nombre_Categoria }} - {{ categoria.Descripcion }}</li>
+        {% else %}
+            <li>No hay categorías disponibles.</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
