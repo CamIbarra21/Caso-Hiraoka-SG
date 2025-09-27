@@ -9,7 +9,15 @@ main_routes = Blueprint('main_routes', __name__)
 #Ruta para la página de inicio (Landing page)
 @main_routes.route('/')
 def index():
-    return render_template('index.html')
+    productos = Producto.query.all()
+    categorias = Categoria.query.all()   
+    cliente_id = current_user.get_id()
+    return render_template(
+        "index.html",
+        productos=productos,
+        categorias=categorias, 
+        cliente_id=cliente_id
+    )
 
 #Ruta para la página de productos
 @main_routes.route('/productos')

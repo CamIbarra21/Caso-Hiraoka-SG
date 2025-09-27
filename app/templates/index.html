@@ -3,9 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hiraoka - Tecnología y HogaR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Landing page</h1>
+    <div class="top-bar">
+        ¡SOLO OFERTAS! Encuentra las mejores ofertas en LAPTOPS para el Trabajo, Estudios o Gamer 
+    </div>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo-box">
+                <a href="/">
+                <img src="{{ url_for('static', filename='img/logo.webp') }}" 
+                    alt="Hiraoka Logo" 
+                    class="logo">
+                 </a>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="¿Qué buscas?">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="voice-search-btn"><i class="fas fa-microphone"></i></button>
+            </div>
+
+            <nav class="user-actions">
+                <a href="#"><i class="fas fa-sign-in-alt"></i> Ingresa</a>
+                <span class="separator">|</span>
+                <a href="#"><i class="fas fa-user-plus"></i> Crear cuenta</a>
+                <span class="separator">|</span>
+                <a href="#"><i class="fas fa-shopping-cart"></i> Mi carrito <span class="cart-count">0</span></a>
+            </nav>
+        </div>
+
+        <nav class="secondary-nav container">
+            <a href="#">Nuestras tiendas</a>
+            <a href="#">Catálogo</a>
+            <a href="#">CKA</a>
+            <a href="#">☎ (01) 000-3000</a>
+        </nav>
+    </header>
+
+    <div class="interbank-banner">
+        <div class="container interbank-content">
+            Paga en 6, 9 o 12 cuotas* sin intereses solo con Tarjetas de Crédito Interbank para compras desde S/ 1,299
+        </div>
+    </div>
+
+    <section class="main-banner-slider">
+        <div class="banner-slide active">
+            <div class="container banner-content">
+                <div class="image-side">
+                    <a href="#" class="banner-link">
+                        <img src="{{ url_for('static', filename='img/banner.webp') }}" 
+                            alt="iPhone 17 PRO" 
+                            class="iphone-image">
+                    </a>
+                </div>
+            </div>
+            <button class="slider-arrow left-arrow"><i class="fas fa-arrow-left"></i></button>
+            <button class="slider-arrow right-arrow"><i class="fas fa-arrow-right"></i></button>
+            <div class="slider-dots"></div>
+        </div>
+    </section>
+
+    <section class="quick-links">
+        <div class="container quick-links-content">
+            <p>¡Encuentra las mejores marcas de:</p>
+            <a href="#" class="quick-link red-link">Celulares</a>
+            <span class="and-separator">y</span>
+            <a href="#" class="quick-link red-link">Smartphones</a>
+        </div>
+    </section>
+
+    <main>
+        <section class="category-circles container">
+            <h2 class="section-title">Encuentra lo que necesitas</h2>
+            <div class="circles-grid">
+                {% for categoria in categorias %}
+                <a href="#" class="category-circle">
+                    <div class="circle-icon" 
+                        style="background-image: url('{{ url_for('static', filename='img/' ~ categoria.Nombre_Categoria|lower ~ '.png') }}');">
+                    </div>
+                    {{ categoria.Nombre_Categoria }}
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        
+        <hr class="section-divider">
+
+        <section class="featured-offers container">
+            <h2 class="section-title">🔥¡Aprovecha nuestras mejores ofertas!🔥</h2>
+            
+            <div class="products-grid">
+                {% for producto in productos %}
+                    <div class="product-card">
+                        <div class="product-image-box">
+                            <img src="{{ url_for('static', filename='img/productos/' ~ producto.ID_Producto ~ '.webp') }}" 
+                                alt="{{ producto.Nombre }}"
+                                onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
+                        </div>
+                        <p class="product-name">{{ producto.Nombre }}</p>
+                        <div class="price-info">
+                            <div class="online-price-label">PRECIO<br>ONLINE</div>
+                            <p class="online-price">S/ {{ producto.Precio }}</p>
+                        </div>
+                        <form action="{{ url_for('main_routes.comprar', id=producto.ID_Producto) }}" method="POST">
+                            <button type="submit" class="btn-add-to-cart">Comprar</button>
+                        </form>
+                    </div>
+                {% endfor %}
+
+                <div class="product-nav-arrows">
+                    <i class="fas fa-arrow-left product-arrow left"></i>
+                    <i class="fas fa-arrow-right product-arrow right"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Hiraoka. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html>
