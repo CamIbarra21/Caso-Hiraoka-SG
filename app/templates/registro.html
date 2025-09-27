@@ -3,47 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css') }}">
 </head>
 <body>
-    <h1>Formulario de Registro</h1>
 
-    <!-- Formulario para registrar un cliente -->
+  <div class="form-card">
+    <div class="form-card__head">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <h1 class="form-card__title">Formulario de Registro</h1>
+    </div>
+
     <form method="POST" action="{{ url_for('main_routes.registro') }}">
-        <!-- Nombre del cliente -->
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br><br>
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" required placeholder="Ingresa tu nombre completo">
+      </div>
 
-        <!-- Correo del cliente -->
-        <label for="correo">Correo:</label>
-        <input type="email" id="correo" name="correo" required><br><br>
+      <div class="form-group">
+        <label for="correo">Correo</label>
+        <input id="correo" name="correo" type="email" required placeholder="tucorreo@ejemplo.com">
+      </div>
 
-        <!-- Teléfono del cliente -->
-        <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" required><br><br>
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" name="telefono" type="text" required placeholder="999 999 999">
+      </div>
 
-        <!-- Dirección del cliente -->
-        <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion" name="direccion" required><br><br>
+      <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" name="direccion" type="text" required placeholder="Calle, número, distrito">
+      </div>
 
-        <!-- Contraseña del cliente -->
-        <label for="contraseña">Contraseña:</label>
-        <input type="password" id="contraseña" name="contraseña" required><br><br>
+      <div class="form-group">
+        <label for="contraseña">Contraseña</label>
+        <input id="contraseña" name="contraseña" type="password" required placeholder="Mínimo 8 caracteres">
+      </div>
 
-        <!-- Botón de envío -->
-        <button type="submit">Registrar</button>
+      <button type="submit">Registrar</button>
     </form>
 
-    <!-- Mostrar mensaje si hay un error o éxito -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+      {% if messages %}
+        <ul class="flash-list">
+          {% for category, message in messages %}
+            <li class="flash {{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     {% endwith %}
+
+    <div class="helper">
+      ¿Ya tienes cuenta? <a href="{{ url_for('main_routes.login') }}">Inicia sesión</a>.
+    </div>
+  </div>
 
 </body>
 </html>

@@ -30,9 +30,9 @@
             </div>
 
             <nav class="user-actions">
-                <a href="#"><i class="fas fa-sign-in-alt"></i> Ingresa</a>
+                <a href="{{ url_for('main_routes.login') }}"><i class="fas fa-sign-in-alt"></i> Ingresa</a>
                 <span class="separator">|</span>
-                <a href="#"><i class="fas fa-user-plus"></i> Crear cuenta</a>
+                <a href="{{ url_for('main_routes.registro') }}"><i class="fas fa-user-plus"></i> Crear cuenta</a>
                 <span class="separator">|</span>
                 <a href="#"><i class="fas fa-shopping-cart"></i> Mi carrito <span class="cart-count">0</span></a>
             </nav>

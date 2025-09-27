@@ -5,36 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <title>Login</title>
 
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
 </head>
 <body>
-    <h1>Formulario de Login</h1>
 
-    <!-- Mostrar mensajes de error o éxito -->
+  <div class="form-card">
+    <div class="form-card__head">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <h1 class="form-card__title">Inicio de sesión</h1>
+    </div>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+      {% if messages %}
+        <ul class="flash-list">
+          {% for category, message in messages %}
+            <li class="flash {{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     {% endwith %}
 
-    <!-- Formulario de login -->
-    <form method="POST" action="{{ url_for('main_routes.login') }}">
-        <!-- Correo del usuario -->
-        <label for="correo">Correo:</label>
-        <input type="email" id="correo" name="correo" required><br><br>
+    <form method="POST" action="{{ url_for('main_routes.login') }}" novalidate>
+      <div class="form-group">
+        <label for="correo">Correo</label>
+        <input id="correo" name="correo" type="email" required placeholder="tucorreo@ejemplo.com" autocomplete="username">
+      </div>
 
-        <!-- Contraseña del usuario -->
-        <label for="contraseña">Contraseña:</label>
-        <input type="password" id="contraseña" name="contraseña" required><br><br>
+      <div class="form-group">
+        <label for="contraseña">Contraseña</label>
+        <input id="contraseña" name="contraseña" type="password" required placeholder="••••••••" autocomplete="current-password">
+      </div>
 
-        <!-- Botón de inicio de sesión -->
-        <button type="submit">Iniciar sesión</button>
+      <button class="button-primary" type="submit">Iniciar sesión</button>
     </form>
 
+    <div class="helper">
+      ¿No tienes cuenta? <a href="{{ url_for('main_routes.registro') }}">Regístrate</a>.
+    </div>
+  </div>
 </body>
 </html>
