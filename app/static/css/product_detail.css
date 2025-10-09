@@ -1,0 +1,369 @@
+
+:root {
+    --color-primary-red: #E30613; 
+    --color-dark-gray: #333;
+    --color-light-gray: #f5f5f5;
+    --color-white: #fff;
+    --color-black: #000;
+} 
+
+
+.product-page-container {
+    background-color: var(--color-white);
+}
+
+.breadcrumbs {
+    padding: 15px 0;
+    font-size: 13px;
+    color: #888;
+}
+
+.breadcrumbs a {
+    color: #555; /* Color menos intrusivo para links en breadcrumbs */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumbs span {
+    color: var(--color-primary-red);
+    font-weight: 500;
+}
+
+.product-detail-layout {
+    display: flex;
+    gap: 40px;
+    padding: 0 0 40px 0; /* Espaciado inferior */
+}
+
+/* --- Galería (Columna Izquierda) --- */
+.product-gallery-section {
+    flex: 0 0 500px; 
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail-list {
+    flex-basis: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.thumbnail-item {
+    width: 65px; /* Ajuste para el tamaño de las miniaturas */
+    height: 65px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumbnail-item:hover, .thumbnail-item.active {
+    border-color: var(--color-primary-red);
+}
+
+.thumbnail-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.scroll-indicator {
+    text-align: center;
+    color: #999;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.main-image-box {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee; /* Borde sutil al igual que el ejemplo */
+}
+
+.main-image-box img {
+    max-width: 90%;
+    max-height: 480px;
+    object-fit: contain;
+}
+
+.gallery-arrow {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--color-dark-gray);
+    /* ... el resto del estilo de las flechas se mantiene ... */
+}
+
+/* --- Info del Producto (Columna Derecha) --- */
+.product-info-section {
+    flex-grow: 1;
+    padding: 0;
+}
+
+.product-brand {
+    font-size: 14px;
+    font-weight: 700; /* Más grueso */
+    color: var(--color-dark-gray);
+    margin-bottom: 5px;
+}
+
+.product-title {
+    font-size: 26px; /* Un poco más grande */
+    font-weight: 700;
+    color: var(--color-dark-gray);
+    margin-bottom: 5px;
+}
+
+.product-model-code { /* Cambiado de .product-model para evitar colisiones */
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.specs-list-new {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.spec-item-new {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline; /* Para que el texto se alinee con la base del punto */
+}
+
+.spec-item-new i { 
+    font-size: 8px; /* Punto más grande */
+    color: #555; 
+    margin-right: 8px;
+}
+
+.payment-banner {
+    background-color: #f7f7f7; /* Gris muy claro, como el ejemplo */
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Para colocar el icono a la derecha */
+}
+
+.payment-icon-small {
+    height: 16px; /* Icono más pequeño */
+}
+
+.product-code-display {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* --- Sección de Precios --- */
+.price-section-new {
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.current-price-box {
+    display: flex;
+    align-items: flex-end; /* Para alinear el label con el precio */
+    gap: 10px;
+}
+
+.current-price-label-new {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-primary-red);
+    line-height: 1.2;
+}
+
+.current-price-new {
+    font-size: 34px; /* Precio más grande y destacado */
+    font-weight: 900;
+    color: var(--color-primary-red);
+    margin: 0;
+}
+
+.regular-price-new {
+    font-size: 14px;
+    color: #888;
+    text-decoration: line-through;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* --- Stock --- */
+.stock-info-new {
+    margin-bottom: 15px;
+}
+
+.available-stock-new {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 0;
+    color: #333;
+}
+
+.available-stock-new strong {
+    font-weight: 700;
+}
+
+/* --- Acciones (Cantidad, Carrito, Favoritos) --- */
+.action-section-new {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.quantity-selector-new {
+    display: flex;
+    align-items: center;
+    gap: 0; /* Quitar el gap */
+    font-size: 14px;
+    border: 1px solid #ddd; /* Borde para todo el selector */
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.quantity-selector-new label {
+    margin-right: 15px;
+    font-weight: 500;
+    display: none; /* Ocultar el label para ser más compacto como en la imagen */
+}
+
+.quantity-selector-new .qty-btn-new {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: #f9f9f9;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    transition: background-color 0.2s;
+}
+
+.quantity-selector-new .qty-btn-new:hover {
+    background-color: #eee;
+}
+
+.quantity-selector-new input {
+    width: 40px;
+    height: 35px;
+    text-align: center;
+    border: none; /* Quitamos bordes internos */
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-add-to-cart-final {
+    background-color: var(--color-primary-red); 
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.btn-add-to-cart-final:hover {
+    background-color: #a30000;
+}
+
+.btn-add-to-cart-final:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-add-to-favorites-final {
+    background: #f9f9f9;
+    color: var(--color-dark-gray);
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-add-to-favorites-final i {
+    color: var(--color-primary-red);
+    margin-right: 5px;
+}
+
+.btn-add-to-favorites-final:hover {
+    background-color: #eee;
+}
+
+/* --- Línea Divisora --- */
+.separator-line-new {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+/* --- Entrega --- */
+.delivery-info-new {
+    margin-bottom: 20px;
+}
+
+.delivery-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.delivery-option-new {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.delivery-option-new i {
+    color: #28a745;
+    margin-right: 5px;
+    font-size: 16px;
+}
+
+
+.share-links-new {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 13px;
+    color: #555;
+    border-top: 1px solid #eee; 
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.share-links-new p {
+    font-weight: 600;
+}
+
+.share-links-new a {
+    color: #999;
+    font-size: 18px;
+}
+
+.share-links-new a:hover {
+    color: #3b5998; 
+}

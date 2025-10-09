@@ -1,15 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiraoka - Tecnología y HogaR</title>
+    <title>Carro de Compras - Hiraoka</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/compra.css') }}"> 
 </head>
 <body>
-    <h2>{{ producto.Nombre }}</h2>
-    <h3>{{ cliente_id }}</h3>
+    <div class="top-bar">
+        ¡SOLO OFERTAS! Encuentra las mejores ofertas en LAPTOPS para el Trabajo, Estudios o Gamer <a href="#" class="top-bar-link">VER AQUÍ</a>
+    </div>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo-box">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='img/logo.webp') }}" 
+                        alt="Hiraoka Logo" 
+                        class="logo">
+                </a>
+            </div>
+
+            <div class="search-bar">
+                <div class="category-dropdown">
+                    </div>
+                <input type="text" placeholder="Usa nuestro buscador">
+                <button class="voice-search-btn"><i class="fas fa-microphone"></i></button>
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+
+            <nav class="user-actions-new">
+                {% if current_user.is_authenticated %}
+                    <a href="#"><i class="fas fa-user-circle"></i> Mi Cuenta ({{ current_user.Nombre_Cliente.split(' ')[0] }})</a>
+                    <a href="{{ url_for('main_routes.logout') }}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                {% else %}
+                    <a href="{{ url_for('main_routes.login') }}"><i class="fas fa-sign-in-alt"></i> Ingresa</a>
+                    <a href="{{ url_for('main_routes.registro') }}"><i class="fas fa-user-plus"></i> Crear cuenta</a>
+                {% endif %}
+                <a href="#"><i class="fas fa-shopping-cart"></i> Mi carrito <span class="cart-count">1</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+            <div class="step-item active">
+                <span class="step-dot"></span>
+                Carrito
+            </div>
+
+
+        <h1 class="cart-title">Carro de Compras</h1>
+        <p>Los productos de tu carro de compras pueden agotarse próximamente. Cómpralos pronto para que no te quedes sin ellos.</p>
+
+        <div class="cart-container">
+            <div class="main-cart-area">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Artículo</th>
+                            <th style="width: 15%;">Cantidad</th>
+                            <th style="width: 15%;">Precio</th>
+                            <th style="width: 15%;">Subtotal</th>
+                            <th style="width: 15%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="product-row">
+                            <td>
+                                <div class="product-item-info">
+                                    <img src="{{ url_for('static', filename='img/productos/' ~ producto.ID_Producto ~ '.webp') }}" 
+                                        alt="{{ producto.Nombre }}"
+                                        onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
+                                    <div>
+
+                                        <p class="product-name">{{ producto.Nombre }}</p>
+                                        <p class="product-code">SKU: **{{ producto.ID_Producto }}**</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cart-quantity-selector">
+                                    <button type="button" class="qty-btn" id="minus-qty-cart">-</button>
+                                    <input type="number" 
+                                        id="quantity-cart" 
+                                        value="{{ cantidad }}" 
+                                        min="1" 
+                                        max="{{ producto.Stock_Web }}" 
+                                        data-price="{{ producto.Precio }}" 
+                                        readonly>
+                                    <button type="button" class="qty-btn" id="plus-qty-cart">+</button>
+                                </div>
+                            </td>
+                            <td>S/ <span class="product-price">{{ "{:,.2f}".format(producto.Precio) }}</span></td>
+                            <td>S/ <span class="product-subtotal">{{ "{:,.2f}".format(producto.Precio * cantidad) }}</span></td>
+                            <td>
+                                <i class="fas fa-trash-alt delete-btn"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; display: flex; align-items: center; border: 1px solid #f0f0f0; padding: 10px;">
+                    <div class="product-item-info" style="align-items: flex-start;">
+                        <div>
+                            <p class="product-name" style="font-weight: 500; margin-bottom: 5px;">Asegura tu inversión</p>
+                            <a href="#" style="color: #c90000; font-size: 13px;">Conoce más</a>
+                        </div>
+                    </div>
+                    <select style="padding: 5px; border-color: #ccc; margin-left: auto;">
+                        <option>Sin garantía extendida</option>
+                        <option>Garantía +1 año</option>
+                        <option>Garantía +2 años</option>
+                    </select>
+                    <button type="button" class="btn-add-to-cart" style="margin-left: 10px; padding: 5px 15px; font-size: 14px;">Añadir</button>
+                </div>
+
+                <div style="text-align: center; padding-top: 50px;">
+                    <h3 style="font-size: 18px; margin-bottom: 20px;">Complementa tu compra</h3>
+                </div>
+
+            </div>
+
+            <div class="resumen-area">
+                <h2>Resumen</h2>
+                <p style="margin-bottom: 20px;">1 Producto</p>
+
+                {% set subtotal_inicial = producto.Precio * cantidad %}
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>S/ <span id="subtotal-final">{{ "{:,.2f}".format(subtotal_inicial) }}</span></span>
+                </div>
+                <div class="summary-row">
+                    <span>Costo de envío</span>
+                    <span>S/ <span id="shipping-cost">0.00</span></span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total Pedido</span>
+                    <span>S/ <span id="total-pedido">{{ "{:,.2f}".format(subtotal_inicial) }}</span></span>
+                </div>
+
+                <form action="{{ url_for('main_routes.checkout') }}" method="POST">
+                    <input type="hidden" name="producto_id" value="{{ producto.ID_Producto }}">
+                    <input type="hidden" name="cantidad" id="cantidad_carrito_checkout" value="{{ cantidad }}">
+                    
+                    <button type="submit" class="btn-comprar-final">COMPRAR</button>
+                </form>
+                <p style="margin-top: 20px; font-size: 13px; text-align: center; color: #777;">
+                    <i class="fas fa-tag"></i> Si tienes un cupón ¡agrégalo en el paso pago!
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/compra.js') }}"></script>
 </body>
 </html>

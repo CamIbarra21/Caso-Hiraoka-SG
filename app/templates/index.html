@@ -101,16 +101,20 @@
             <div class="products-grid">
                 {% for producto in productos %}
                     <div class="product-card">
-                        <div class="product-image-box">
-                            <img src="{{ url_for('static', filename='img/productos/' ~ producto.ID_Producto ~ '.webp') }}" 
-                                alt="{{ producto.Nombre }}"
-                                onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
-                        </div>
-                        <p class="product-name">{{ producto.Nombre }}</p>
+                        <a href="{{ url_for('main_routes.producto', id=producto.ID_Producto) }}" class="product-link">
+                            <div class="product-image-box">
+                                <img src="{{ url_for('static', filename='img/productos/' ~ producto.ID_Producto ~ '.webp') }}" 
+                                    alt="{{ producto.Nombre }}"
+                                    onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
+                            </div>
+                            <p class="product-name">{{ producto.Nombre }}</p>
+                        </a>
+                        
                         <div class="price-info">
                             <div class="online-price-label">PRECIO<br>ONLINE</div>
                             <p class="online-price">S/ {{ producto.Precio }}</p>
                         </div>
+                        
                         <form action="{{ url_for('main_routes.comprar', id=producto.ID_Producto) }}" method="POST">
                             <button type="submit" class="btn-add-to-cart">Comprar</button>
                         </form>

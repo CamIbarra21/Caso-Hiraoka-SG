@@ -1,1 +1,173 @@
-<h1>Producto {{ producto.Nombre }}</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ producto.Nombre }} - Hiraoka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_detail.css') }}"> 
+</head>
+<body>
+    <div class="top-bar">
+        ¡SOLO OFERTAS! Encuentra las mejores ofertas en LAPTOPS para el Trabajo, Estudios o Gamer <a href="#" class="top-bar-link">VER AQUÍ</a>
+    </div>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo-box">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='img/logo.webp') }}" 
+                        alt="Hiraoka Logo" 
+                        class="logo">
+                </a>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Usa nuestro buscador">
+                <button class="voice-search-btn"><i class="fas fa-microphone"></i></button>
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+
+            <nav class="user-actions-new">
+                {% if current_user.is_authenticated %}
+                    <a href="#"><i class="fas fa-user-circle"></i> Mi Cuenta ({{ current_user.Nombre_Cliente.split(' ')[0] }})</a>
+                    <a href="{{ url_for('main_routes.logout') }}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                {% else %}
+                    <a href="{{ url_for('main_routes.login') }}"><i class="fas fa-sign-in-alt"></i> Ingresa</a>
+                    <a href="{{ url_for('main_routes.registro') }}"><i class="fas fa-user-plus"></i> Crear cuenta</a>
+                {% endif %}
+                <a href="#"><i class="fas fa-shopping-cart"></i> Mi carrito <span class="cart-count">0</span></a>
+            </nav>
+        </div>
+
+        <nav class="secondary-nav container">
+            </nav>
+    </header>
+    <div class="product-page-container">
+        <div class="container breadcrumbs">
+            <a href="/">Hiraoka.com.pe</a> / 
+            <a href="#">Televisor LED 4K UHD Smart</a> / 
+            <span>{{ producto.Nombre }}</span>
+        </div>
+        
+        <main class="product-detail-layout container">
+            
+            <section class="product-gallery-section">
+                
+                <div class="thumbnail-list">
+                    {% for i in range(5) %}
+                    <div class="thumbnail-item {% if loop.index == 1 %}active{% endif %}">
+                        <img src="{{ url_for('static', filename='img/productos/' ~ producto.ID_Producto ~ '.webp') }}" alt="Vista {{ loop.index }}">
+                    </div>
+                    {% endfor %}
+                    <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                
+                <div class="main-image-box">
+                    <button class="gallery-arrow left-arrow"><i class="fas fa-chevron-left"></i></button>
+                    <img src="{{ url_for('static', filename='img/productos/' ~ producto.ID_Producto ~ '.webp') }}" 
+                          alt="{{ producto.Nombre }}" 
+                          onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
+                    <button class="gallery-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section class="product-info-section">
+                <p class="product-brand">{{ producto.Marca | default('MARCA GENÉRICA') }}</p>
+                <h1 class="product-title">{{ producto.Nombre }}</h1>
+                <p class="product-model-code">{{ producto.Modelo | default('MODELO X-1234') }}</p>
+
+                
+                <div class="payment-banner">
+                    Ahora puedes pagar también usando **PagoEfectivo**
+                    <img src="{{ url_for('static', filename='img/pagoefectivo_icon.png') }}" alt="PagoEfectivo" class="payment-icon-small">
+                </div>
+
+                <p class="product-code-display">Código: **{{ producto.ID_Producto }}**</p>
+
+                <div class="price-section-new">
+                    <div class="current-price-box">
+                        <p class="current-price-label-new">PRECIO</p>
+                        <p class="current-price-new">S/ **{{ "{:,.2f}".format(producto.Precio) }}**</p>
+                    </div>
+                    
+                    {% set precio_regular = producto.Precio_Regular | default(0) %}
+                    {% if precio_regular and precio_regular > producto.Precio %}
+                        <p class="regular-price-new">Precio regular: S/ {{ "{:,.2f}".format(precio_regular) }}</p>
+                    {% elif producto.Precio > 1000 %} 
+                        <p class="regular-price-new">Precio regular: S/ {{ "{:,.2f}".format(producto.Precio + 200) }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="stock-info-new">
+                    {% set stock_web = producto.Stock_Web | default(0) %}
+                    {% if stock_web > 0 %}
+                        <p class="available-stock-new available">
+                            <i class="fas fa-box"></i> Stock Web: **{{ stock_web }}** unidades
+                        </p>
+                    {% else %}
+                        <p class="available-stock-new out-of-stock">
+                            <i class="fas fa-times-circle"></i> Sin stock por el momento.
+                        </p>
+                    {% endif %}
+                    </div>
+
+                <div class="action-section-new">
+                    <div class="quantity-selector-new">
+                        <label for="quantity">Cantidad</label>
+                        <button type="button" class="qty-btn-new" id="minus-qty">-</button>
+                        <input type="number" id="quantity" value="1" min="1" max="{{ stock_web }}" readonly>
+                        <button type="button" class="qty-btn-new" id="plus-qty">+</button>
+                    </div>
+                    
+                    <form action="{{ url_for('main_routes.comprar', id=producto.ID_Producto) }}" method="POST" class="add-to-cart-form">
+                        <input type="hidden" name="quantity" id="quantity_to_send" value="1"> 
+                        <button type="submit" class="btn-add-to-cart-final" {% if stock_web <= 0 %}disabled{% endif %}>
+                            Añadir al carro
+                        </button>
+                    </form>
+                    
+                    <button class="btn-add-to-favorites-final">
+                        <i class="far fa-heart"></i> Agregar a los favoritos
+                    </button>
+                </div>
+                
+                <hr class="separator-line-new">
+
+                <div class="delivery-info-new">
+                    <p class="delivery-title">Disponibilidad y tiempos de entrega</p>
+                    <p class="delivery-option-new available">
+                        <i class="fas fa-check-circle"></i> Disponible para despacho a domicilio
+                    </p>
+                    <p class="delivery-option-new available">
+                        <i class="fas fa-check-circle"></i> Disponible para retiro en tu tienda seleccionada
+                    </p>
+                </div>
+                
+                <div class="share-links-new">
+                    <p>Comparte este producto</p>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+
+                <section class="product-detail-description">
+                    <h2 class="description-title">Características Detalladas</h2>
+                    <p class="description-content">
+                        {% if producto.Descripcion %}
+                            {{ producto.Descripcion | safe }}
+                        {% else %}
+                            No hay descripción detallada disponible para este producto.
+                        {% endif %}
+                    </p>
+                </section>
+                </section>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script> 
+</body>
+</html>
